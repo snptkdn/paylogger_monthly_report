@@ -2,8 +2,8 @@ import requests
 import create_amount_per_category
 import create_amount_per_day
 
-create_amount_per_category.create()
 create_amount_per_day.create()
+create_amount_per_category.create()
 
 image_day = open('amount_per_day.png', 'rb')
 image_caregory = open('amount_per_category.png', 'rb')
