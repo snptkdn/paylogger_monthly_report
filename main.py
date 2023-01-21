@@ -1,6 +1,7 @@
 import requests
 import create_amount_per_category
 import create_amount_per_day
+import create_regression
 from dotenv import load_dotenv 
 import datetime
 import calendar
@@ -28,6 +29,13 @@ def create_monthly_report():
     data = {'another_key': 'another_value'}
     r = requests.post(DISCORD_MONTHLY_WEBHOOKS_URL, files=files, data=data)
 
+def create_daily_report():
+    data = create_regression.get_daily_data()
+    r = requests.post(DISCORD_DAILY_WEBHOOKS_URL, json=data)
+    print(data)
+    print(r.reason)
+
+
 load_dotenv()
 
 DISCORD_MONTHLY_WEBHOOKS_URL = os.getenv('DISCORD_MONTHLY_WEBHOOKS_URL')
@@ -36,6 +44,5 @@ DISCORD_DAILY_WEBHOOKS_URL = os.getenv('DISCORD_DAILY_WEBHOOKS_URL')
 if is_end_of_month(datetime.date.today()):
     create_monthly_report()
 else:
-    data = {'content': '日次レポートをお届けします。'}
-    r = requests.post(DISCORD_DAILY_WEBHOOKS_URL, json=data)
+    create_daily_report()
     
