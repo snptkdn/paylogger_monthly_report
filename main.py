@@ -17,7 +17,7 @@ def create_monthly_report():
     image_day = open('amount_per_day.png', 'rb')
     image_caregory = open('amount_per_category.png', 'rb')
 
-    data = {'content': 'Here, Its Stats!'}
+    data = {'content': '月次レポートをお届けします。'}
     r = requests.post(DISCORD_MONTHLY_WEBHOOKS_URL, json=data)
 
     files = { 'param_name': ('amount_per_day.jpg', image_day, 'image/jpeg') }
