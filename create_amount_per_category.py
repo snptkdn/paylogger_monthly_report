@@ -7,9 +7,17 @@ import matplotlib.pyplot as plt
 import math
 plt.style.use("dsheep_gray")
 import seaborn as sns
+import datetime as dt
 
 def create():
-    response = requests.get('http://34.127.13.199:8000/log/this_month/per_category')
+    today  = dt.datetime.today()
+    response = requests.get(
+        'http://34.127.13.199:8000/log/per_category?year={}&month={}'
+        .format(
+            today.year,
+            today.month
+        )
+    )
     print(response.json())  # レスポンスのjsonをdict化して返
 
 

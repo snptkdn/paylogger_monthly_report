@@ -2,6 +2,7 @@ import requests
 import datetime
 import calendar
 import math
+import datetime as dt
 
 def append_fields(fields, name, value, inline=False):
     fields.append(
@@ -28,12 +29,30 @@ def append_categories(per_category, fields):
     
 
 def get_daily_data():
-    per_day = requests.get('http://34.127.13.199:8000/log/this_month/per_day').json()
-    per_category = requests.get('http://34.127.13.199:8000/log/this_month/per_category').json()
-    total_str = requests.get('http://34.127.13.199:8000/log/this_month').json()
+    today  = dt.datetime.today()
+    per_day = requests.get(
+        'http://34.127.13.199:8000/log/per_day?year={}&month={}'
+        .format(
+            today.year,
+            today.month
+        )
+    ).json()
+    per_category = requests.get(
+        'http://34.127.13.199:8000/log/per_category?year={}&month={}'
+        .format(
+            today.year,
+            today.month
+        )
+    ).json()
+    total_str = requests.get(
+        'http://34.127.13.199:8000/log/total?year={}&month={}'
+        .format(
+            today.year,
+            today.month
+        )
+    ).json()
 
     total = int(total_str)
-    today = datetime.date.today()
     today_str = today.strftime('%Y-%m-%d')
     today_amount_str = per_day[today_str]
     today_amount = int(today_amount_str)

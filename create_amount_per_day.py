@@ -8,10 +8,18 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 plt.style.use("dsheep_gray")
 import seaborn as sns
+import datetime as dt
 
 def create():
     # Prepare Data
-    responses = requests.get('http://34.127.13.199:8000/log/this_month/per_day')
+    today  = dt.datetime.today()
+    response = requests.get(
+        'http://34.127.13.199:8000/log/per_day?year={}&month={}'
+        .format(
+            today.year,
+            today.month
+        )
+    )
     print(responses.json())  # レスポンスのjsonをdict化して返
     dict_day = {}
     count = 0
